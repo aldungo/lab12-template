@@ -34,6 +34,8 @@ Once this method is implemented, you will need to test it in the main method. Co
 
 ## Lab 12 Task: Craps
 
+**📊 See [ARRAY_VISUALIZATION.md](ARRAY_VISUALIZATION.md) for a visual guide to understanding the array structure and bubble sort process.**
+
 Create a project called `Craps_FirstName_LastName` or `Lab12_FirstName_LastName`. Remember to include comments describing your program. A key component of this lab should be comments describing the methods used.
 
 The steps provided are broken down into a bottom-up implementation. Methods implemented in earlier steps will be used in later steps.

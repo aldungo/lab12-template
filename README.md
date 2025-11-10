@@ -1,6 +1,6 @@
-# Programming Fundamentals I — Lab 11
+# Programming Fundamentals I — Lab 12
 
-## Method Overloading and More Dice Rolls
+## Array Processing and Bubble Sort
 
 Due date: 11:59 p.m. the night before the next lab meeting
 
@@ -8,131 +8,121 @@ Due date: 11:59 p.m. the night before the next lab meeting
 
 ## Purpose
 
-To expand on our dice rolling simulation, we’ll consider cases where the amount and kinds of dice depend on inputs to the program. Imagine an application with an interface that lets a user specify how many dice to roll and the type of dice (D6, D20, etc.). This program emphasizes the following concept:
+A casino is setting up a digital interface for some of the various games. One of these is the dice game craps. You will be building the logic for the game by collecting statistics related to rolling the dice.
 
-• Overloading methods
+This lab focuses on the following concepts:
 
----
-
-## In‑Class 11
-
-Let’s practice a simple case of method overloading. Prepare a program that includes two versions of an `add` method: one that performs mathematical addition, and one that performs String concatenation.
-
-- The first `add` method takes two doubles as arguments and returns a double equal to the sum of the two parameters.
-- The second `add` method takes two Strings as arguments and returns a String that concatenates the first parameter with a space and then the second parameter.
-
-After implementing these two methods, test both in `main` by printing sample outputs. For example:
-
-```
-Adding 250 and 500 gives: 750.0
-Combining words ‘Hello’ and ‘world’ gives: Hello world
-```
+• Method abstraction and stepwise refinement
+• Array processing
+• Using arrays with methods
 
 ---
 
-## Lab 11 Task: MoreDiceRolls
+## In‑Class 12
 
-Create a project called `MoreDiceRolls_FirstName_LastName` or `Lab11_FirstName_LastName`. Remember to include comments summarizing the program.
+This lab will emphasize array processing and using multiple methods with arrays. One of the most important kinds of processing with arrays is sorting the elements. For this lab, you will be performing a bubble sort to place the results in increasing order. The name of this sort comes from the fact that smaller numbers will bubble to the top (front of the array) while larger numbers sink to the bottom (back of the array).
 
-The steps below follow a bottom‑up implementation. Methods implemented earlier will be used later. Make sure the three custom methods you implement all have the same name (i.e., you are overloading the method). You may use either `java.util.Random` or `Math.random()`.
+Implement a separate method that takes an int array as its argument and returns nothing. Since the array reference is shared, the original array will be changed regardless of whether anything is returned from this method.
 
-### Step 1 — Roll a single six‑sided die
+A bubble sort will require two nested for loops. The outer for loop represents each step of the sort. These steps start from 0, and the total number of steps is equal to the array length – 1. The inner for loop represents the part of the array to sort for that step. The positions to examine start from 0, and the total number of positions to examine is equal to the array length – 1 – the current step. For example, step 0 considers all but the last position, step 1 considers all but the last two positions, and so on.
 
-- Implement a method that rolls one six‑sided die.
-- Parameters: none
-- Returns: `int` result in the range 1–6 (inclusive)
+In this inner for loop, you will compare adjacent elements in the array. Check if the element at the current index of the array is greater than the element in the next index. If this is true, these two elements need to be swapped.
 
-### Step 2 — Roll a single die with any number of sides
+Once this method is implemented, you will need to test it in the main method. Construct an int array that includes 10 random numbers. Print the contents of the array before and after sorting.
 
-- Implement a method that rolls one die with any number of sides.
-- Parameters: one `int` specifying the number of sides
-- Returns: `int` result in the range 1–numberOfSides (inclusive)
+---
 
-### Step 3 — Roll two dice and sum them
+## Lab 12 Task: Craps
 
-- Implement a method that rolls two dice, each of which may have any number of sides.
-- Parameters: two `int` values specifying the number of sides for each die
-- Returns: `int` equal to the sum of the two results
+Create a project called `Craps_FirstName_LastName` or `Lab12_FirstName_LastName`. Remember to include comments describing your program. A key component of this lab should be comments describing the methods used.
 
-### Step 4 — Use the methods in main
+The steps provided are broken down into a bottom-up implementation. Methods implemented in earlier steps will be used in later steps.
 
-In your `main` method:
+### Methods Required
 
-1. Print the result of calling each of the three methods. For the second and third calls, use `(20)` and `(6, 6)`, respectively.
-2. After the three print statements, declare an `int` variable to count how many times you roll snake eyes (two 1s) when using two six‑sided dice.
-3. Create a loop to perform 10,000 rolls using the third method. Increment the snake‑eyes counter whenever the result is 2.
-4. After the rolls, print the probability of rolling snake eyes.
+The following is a listing of the methods necessary for this program. This listing specifies the parameters and return types for each of the methods:
+
+• The main method
+
+• The `rollDice` method that takes no arguments and returns a one-dimensional int array
+
+• The `sortResults` method that takes a one-dimensional int array and returns a one-dimensional int array
+
+### Step 1 — Implement the rollDice method
+
+In the `rollDice` method, construct a one-dimensional int array with a length of 11. This array will hold the number of times each number is rolled. For example, position 0 of this array holds the number of times a 2 is rolled, and position 10 (the last position) holds the number of times a 12 is rolled.
+
+In the `rollDice` method, write a for loop that will iterate 10,000 times. In this for loop, generate two random numbers from 1-6 and add these numbers together. Increment the element at the position that represents the number rolled.
+
+After the for loop in the `rollDice` method, return the int array.
+
+### Step 2 — Implement the sortResults method
+
+In the `sortResults` method, construct a one-dimensional array with the following initial values:
+
+```java
+{ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }
+```
+
+The `sortResults` method will take the results array (the array passed into this method) and perform a bubble sort to place the results in increasing order. If elements in the results array are swapped, perform an identical swap on the one-dimensional array that was constructed in this method. (This second swap will be important for the output of this program later.)
+
+After sorting both arrays, return the one-dimensional array that was constructed in this method.
+
+### Step 3 — Implement the main method
+
+In the main method, make a call to the `rollDice` method and assign the result to an int array. Next, make a call to the `sortResults` method and assign the result to another int array.
+
+Finally, write a for loop that will iterate over all elements in either array (they both have the same length). The array returned from `rollDice` holds the probabilities of rolling a specific number, and the array returned from `sortResults` holds the corresponding number. Use this information to prepare print statements indicating the probability of rolling each number. The probability must be formatted to two decimal places. For example:
+
+```
+The probability of rolling a 2 is approximately 2.77%.
+```
 
 ---
 
 ## Example Output
 
-Your exact results will vary because rolls are random. Example flow:
+The following is an example program flow. Keep in mind that the dice rolls are random, so the outputs will be slightly different each time you run the program.
 
 ```
-The result of rolling a single six-sided die is 4
-The result of rolling a single twenty-sided die is 8
-The result of rolling two six-sided dice is 6
-The probability of rolling snake eyes is 2.84%.
+The probability of rolling a 2 is approximately 2.85%.
+The probability of rolling a 12 is approximately 3.03%.
+The probability of rolling a 3 is approximately 5.23%.
+The probability of rolling a 11 is approximately 5.47%.
+The probability of rolling a 4 is approximately 8.28%.
+The probability of rolling a 10 is approximately 8.32%.
+The probability of rolling a 5 is approximately 10.89%.
+The probability of rolling a 9 is approximately 11.19%.
+The probability of rolling a 6 is approximately 13.79%.
+The probability of rolling a 8 is approximately 14.43%.
+The probability of rolling a 7 is approximately 16.52%.
 ```
 
 ---
 
-## Grading Criteria (100 points)
+## Grading Criteria (150 points)
 
 Make sure you have the following in your program:
 
-• Comments describing this program — 5 points
+• **Comments describing this program — 10 points**
 
-• Properly implementing the first custom method — 9 points
-   - Method header — 3 points
-   - Method body — 6 points
-
-• Properly implementing the second custom method — 16 points
+• **Properly implementing the rollDice method — 42 points**
    - Method header — 6 points
-   - Method body — 10 points
+   - Array construction — 4 points
+   - For loop to handle dice rolls — 15 points
+   - Properly incrementing the correct position of the array — 15 points
+   - Writing the return statement — 2 points
 
-• Properly implementing the third custom method — 30 points
-   - Method header — 8 points
-   - Method body — 22 points
+• **Properly implementing the sortResults method — 68 points**
+   - Method header — 5 points
+   - Array construction — 4 points
+   - Nested for loops to handle bubble sort — 35 points
+   - Properly swapping elements in both arrays — 22 points
+   - Writing the return statement — 2 points
 
-• Properly implementing the main method — 40 points
-   - First three print statements — 9 points
-   - Variable declaration and loop — 25 points
-   - Last print statement — 6 points
+• **Properly implementing the main method — 30 points**
+   - Calling the rollDice method — 5 points
+   - Calling the sortResults method — 5 points
+   - For loop to print the results — 20 points
 
----
-
-## How to Run
-
-From a terminal in VS Code (macOS, zsh):
-
-```bash
-# Compile (replace with your actual file name):
-javac Lab11_FirstName_LastName.java
-
-# Or if you used the alternate name:
-javac MoreDiceRolls_FirstName_LastName.java
-
-# Run (match the class name you compiled):
-java Lab11_FirstName_LastName
-# or
-java MoreDiceRolls_FirstName_LastName
-```
-
----
-
-## Screenshots
-
-Please upload at least one screenshot of your console output. You can use the example outputs to show the correct corresponding behavior or use your own input/rolls.
-
----
-
-## Submitting Your Work
-
-1. Commit and push your changes using Source Control panel.
-2. Verify on GitHub that your latest commit is present and your filenames follow the required convention.
-3. Submit your repository URL to Blackboard to complete the assignment.
-
-Good luck, and have fun rolling! 🎲
-
+**The grade will be out of 150 points for this lab assignment.**

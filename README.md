@@ -1,90 +1,168 @@
-# Programming Fundamentals I — Lab 12
+# Lab 12: Array Processing and Bubble Sort
+**Due Date:** @ 11:59 p.m. the night *before* next lab
 
-## Array Processing and Bubble Sort
-
-Due date: 11:59 p.m. the night before the next lab meeting
-
----
-
-## Purpose
-
-A casino is setting up a digital interface for some of the various games. One of these is the dice game craps. You will be building the logic for the game by collecting statistics related to rolling the dice.
-
-This lab focuses on the following concepts:
-
-• Method abstraction and stepwise refinement
-• Array processing
-• Using arrays with methods
+**Submission:** Push to GitHub repository + Submit link to Blackboard
 
 ---
 
-## In‑Class 12
+## 📋 Overview
 
-This lab will emphasize array processing and using multiple methods with arrays. One of the most important kinds of processing with arrays is sorting the elements. For this lab, you will be performing a bubble sort to place the results in increasing order. The name of this sort comes from the fact that smaller numbers will bubble to the top (front of the array) while larger numbers sink to the bottom (back of the array).
+A casino is setting up a digital interface for some of its games. One of these is the dice game craps. You will build the logic for the game by collecting and sorting statistics related to rolling the dice.
 
-Implement a separate method that takes an int array as its argument and returns nothing. Since the array reference is shared, the original array will be changed regardless of whether anything is returned from this method.
-
-A bubble sort will require two nested for loops. The outer for loop represents each step of the sort. These steps start from 0, and the total number of steps is equal to the array length – 1. The inner for loop represents the part of the array to sort for that step. The positions to examine start from 0, and the total number of positions to examine is equal to the array length – 1 – the current step. For example, step 0 considers all but the last position, step 1 considers all but the last two positions, and so on.
-
-In this inner for loop, you will compare adjacent elements in the array. Check if the element at the current index of the array is greater than the element in the next index. If this is true, these two elements need to be swapped.
-
-Once this method is implemented, you will need to test it in the main method. Construct an int array that includes 10 random numbers. Print the contents of the array before and after sorting.
+**Learning Objectives:**
+- Practice method abstraction and stepwise refinement
+- Store and process data using one-dimensional arrays
+- Use arrays as method arguments and return values
+- Implement a bubble sort algorithm
 
 ---
 
-## Lab 12 Task: Craps
+## 🚀 Getting Started with GitHub Codespaces
 
-**📊 See [ARRAY_VISUALIZATION.md](ARRAY_VISUALIZATION.md) for a visual guide to understanding the array structure and bubble sort process.**
+### Initial Setup
+1. **Accept the assignment** via the GitHub Classroom link provided
+2. **Open your repository** in GitHub Codespaces:
+   - Click the green "**Code**" button
+   - Select "**Codespaces**" tab
+   - Click "**Create codespace on main**"
+3. **Wait for the environment to load** (this may take 1–2 minutes on first launch)
+4. **Explore your workspace** — on the left side you'll see the file explorer with:
+   - `README.md` (this file)
+   - `InClass12_FirstName_LastName.java` — for your in-class activity
+   - `ARRAY_VISUALIZATION.md` — a visual guide to the array structure and sort process
 
-Create a project called `Craps_FirstName_LastName` or `Lab12_FirstName_LastName`. Remember to include comments describing your program. A key component of this lab should be comments describing the methods used.
+**Note:** You will create the `Lab12_FirstName_LastName.java` (or `Craps_FirstName_LastName.java`) file yourself. Update all filenames and class headers with your actual first and last name.
 
-The steps provided are broken down into a bottom-up implementation. Methods implemented in earlier steps will be used in later steps.
+---
+
+## 📝 Part 1: In-Class Activity (Participation Points)
+
+**File to Work With:** `InClass12_FirstName_LastName.java`
+
+### Background: Bubble Sort
+
+One of the most important operations you can perform on an array is **sorting** its elements. This activity introduces **bubble sort** — an algorithm that repeatedly steps through an array and places values in increasing order. The name comes from the behavior of the sort: smaller numbers gradually *bubble* toward the front of the array, while larger numbers *sink* toward the back.
+
+A key thing to understand first: when you pass an array to a method, Java passes a *reference* to that array — not a copy. This means any changes made inside the method are reflected in the original array even if the method returns `void`.
+
+### Task
+
+Implement a **separate method** that:
+- Takes an `int` array as its only argument
+- Returns nothing (`void`)
+- Sorts the array in place using bubble sort
+
+#### How bubble sort works
+
+Your sort will use **two nested `for` loops**:
+
+**Outer loop — controls the number of passes:**
+- Starts at step `0`
+- Total number of steps = `array length – 1`
+- Each pass guarantees that one more element has settled into its final position at the back
+
+**Inner loop — controls which pairs are compared each pass:**
+- Starts at position `0`
+- Total positions to examine = `array length – 1 – current step`
+- For example: step 0 examines all but the last position; step 1 examines all but the last two; and so on
+
+**Inside the inner loop:**
+- Compare the element at the current index with the element at the *next* index
+- If the current element is **greater than** the next element, **swap** the two
+
+#### Testing your method
+
+Once your sort method is implemented, test it in `main`:
+1. Construct an `int` array containing **10 random numbers**
+2. Print the array contents **before** sorting
+3. Call your sort method
+4. Print the array contents **after** sorting
+
+💡 **Remember:** Take a screenshot of your terminal output and add it to your repository (drag and drop into the file explorer on the left).
+
+📊 **See [ARRAY_VISUALIZATION.md](ARRAY_VISUALIZATION.md) for a visual walkthrough of how the array and sort behave step by step.**
+
+---
+
+## 🔬 Part 2: Main Lab Assignment — Craps
+
+Create a file named `Lab12_FirstName_LastName.java` or `Craps_FirstName_LastName.java` (replace with your actual name). Include comments describing your program's purpose and each method's role — comments are a significant part of the grade.
+
+The steps below follow a **bottom-up implementation**: methods built in earlier steps are called in later ones.
 
 ### Methods Required
 
-The following is a listing of the methods necessary for this program. This listing specifies the parameters and return types for each of the methods:
+| Method | Parameters | Return Type |
+|---|---|---|
+| `main` | standard | `void` |
+| `rollDice` | none | `int[]` (one-dimensional) |
+| `sortResults` | `int[]` (one-dimensional) | `int[]` (one-dimensional) |
 
-• The main method
+---
 
-• The `rollDice` method that takes no arguments and returns a one-dimensional int array
+### Step 1 — Implement `rollDice`
 
-• The `sortResults` method that takes a one-dimensional int array and returns a one-dimensional int array
+**What this method does:** simulates 10,000 pairs of dice rolls and counts how often each possible sum occurs.
 
-### Step 1 — Implement the rollDice method
+**Inside `rollDice`:**
 
-In the `rollDice` method, construct a one-dimensional int array with a length of 11. This array will hold the number of times each number is rolled. For example, position 0 of this array holds the number of times a 2 is rolled, and position 10 (the last position) holds the number of times a 12 is rolled.
+1. Construct a one-dimensional `int` array with a length of **11**.
+   - This array tracks how many times each sum is rolled.
+   - Position `0` holds the count for a sum of **2** (the lowest possible roll).
+   - Position `10` holds the count for a sum of **12** (the highest possible roll).
 
-In the `rollDice` method, write a for loop that will iterate 10,000 times. In this for loop, generate two random numbers from 1-6 and add these numbers together. Increment the element at the position that represents the number rolled.
+2. Write a `for` loop that iterates **10,000 times**. Each iteration:
+   - Generates two random integers from **1–6**
+   - Adds them together
+   - Increments the array element at the position representing that sum
 
-After the for loop in the `rollDice` method, return the int array.
+3. After the loop, **return** the array.
 
-### Step 2 — Implement the sortResults method
+---
 
-In the `sortResults` method, construct a one-dimensional array with the following initial values:
+### Step 2 — Implement `sortResults`
 
-```java
-{ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }
-```
+**What this method does:** sorts the roll-count data in ascending order while keeping a parallel array of the corresponding dice sums in sync — so you always know *which* sum belongs to *which* count.
 
-The `sortResults` method will take the results array (the array passed into this method) and perform a bubble sort to place the results in increasing order. If elements in the results array are swapped, perform an identical swap on the one-dimensional array that was constructed in this method. (This second swap will be important for the output of this program later.)
+**Inside `sortResults`:**
 
-After sorting both arrays, return the one-dimensional array that was constructed in this method.
+1. Construct a one-dimensional `int` array with these initial values:
 
-### Step 3 — Implement the main method
+   ```java
+   { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }
+   ```
 
-In the main method, make a call to the `rollDice` method and assign the result to an int array. Next, make a call to the `sortResults` method and assign the result to another int array.
+2. Perform a **bubble sort** on the **results array passed into this method** to place its values in increasing order.
 
-Finally, write a for loop that will iterate over all elements in either array (they both have the same length). The array returned from `rollDice` holds the probabilities of rolling a specific number, and the array returned from `sortResults` holds the corresponding number. Use this information to prepare print statements indicating the probability of rolling each number. The probability must be formatted to two decimal places. For example:
+3. Whenever you swap two elements in the results array, perform the **identical swap** at the same positions in the array you constructed in step 1.
+   > This parallel swap is what keeps the dice-sum labels aligned with their counts — it will be essential for correct output in Step 3.
 
-```
-The probability of rolling a 2 is approximately 2.77%.
-```
+4. After sorting, **return** the array you constructed in step 1.
+
+---
+
+### Step 3 — Implement `main`
+
+**What this method does:** ties everything together and prints the probability of rolling each possible sum.
+
+**Inside `main`:**
+
+1. Call `rollDice` and assign the returned array to an `int` array variable.
+2. Call `sortResults` (passing the array from step 1) and assign the returned array to a second `int` array variable.
+3. Write a `for` loop that iterates over every element in either array (both are the same length).
+   - The array from `rollDice` holds the **count** for each sum.
+   - The array from `sortResults` holds the **corresponding sum label**.
+   - Use both together to calculate and print each probability, formatted to **two decimal places**:
+
+     ```
+     The probability of rolling a 2 is approximately 2.77%.
+     ```
 
 ---
 
 ## Example Output
 
-The following is an example program flow. Keep in mind that the dice rolls are random, so the outputs will be slightly different each time you run the program.
+The dice rolls are random, so your numbers will differ slightly from this sample each run.
 
 ```
 The probability of rolling a 2 is approximately 2.85%.
@@ -104,27 +182,23 @@ The probability of rolling a 7 is approximately 16.52%.
 
 ## Grading Criteria (150 points)
 
-Make sure you have the following in your program:
-
-• **Comments describing this program — 10 points**
-
-• **Properly implementing the rollDice method — 42 points**
-   - Method header — 6 points
-   - Array construction — 4 points
-   - For loop to handle dice rolls — 15 points
-   - Properly incrementing the correct position of the array — 15 points
-   - Writing the return statement — 2 points
-
-• **Properly implementing the sortResults method — 68 points**
-   - Method header — 5 points
-   - Array construction — 4 points
-   - Nested for loops to handle bubble sort — 35 points
-   - Properly swapping elements in both arrays — 22 points
-   - Writing the return statement — 2 points
-
-• **Properly implementing the main method — 30 points**
-   - Calling the rollDice method — 5 points
-   - Calling the sortResults method — 5 points
-   - For loop to print the results — 20 points
-
-**The grade will be out of 150 points for this lab assignment.**
+| Component | Points |
+|---|---|
+| **Comments describing this program** | 10 |
+| **`rollDice` method** | **42** |
+| &nbsp;&nbsp;&nbsp;Method header | 6 |
+| &nbsp;&nbsp;&nbsp;Array construction | 4 |
+| &nbsp;&nbsp;&nbsp;`for` loop to handle dice rolls | 15 |
+| &nbsp;&nbsp;&nbsp;Correctly incrementing the right array position | 15 |
+| &nbsp;&nbsp;&nbsp;Return statement | 2 |
+| **`sortResults` method** | **68** |
+| &nbsp;&nbsp;&nbsp;Method header | 5 |
+| &nbsp;&nbsp;&nbsp;Array construction | 4 |
+| &nbsp;&nbsp;&nbsp;Nested `for` loops for bubble sort | 35 |
+| &nbsp;&nbsp;&nbsp;Correctly swapping elements in both arrays | 22 |
+| &nbsp;&nbsp;&nbsp;Return statement | 2 |
+| **`main` method** | **30** |
+| &nbsp;&nbsp;&nbsp;Calling `rollDice` | 5 |
+| &nbsp;&nbsp;&nbsp;Calling `sortResults` | 5 |
+| &nbsp;&nbsp;&nbsp;`for` loop to print results | 20 |
+| **Total** | **150** |
